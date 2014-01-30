@@ -4,16 +4,19 @@
 
 <p>People: <%= @people %></p>
 <p>
-Prefered Time Slots:
-<% @prefered_slots.each do |person, slot| %>
+Preferred Time Slots:
+<% @preferred_slots.each do |person, slot| %>
 <ul>
   <li><%= person %>: <%= @slots[slot] %></li>
 </ul>
 <% end %>
 </p>
 
+<hr/>
 
 <% for week in 0..(@weeks-1) %>
+<%# for week in 0..7 %>
+
 <table class="table table-striped">
   <thead>
   <tr>
@@ -23,25 +26,32 @@ Prefered Time Slots:
     <% end %>
   </tr>
   </thead>
+  <% shift_slots = @shift.schedule(week) %>
   <tbody>
     <tr>
       <td>Morning</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td><%= shift_slots[0] %></td>
+      <td><%= shift_slots[2] %></td>
+      <td><%= shift_slots[4] %></td>
+      <td><%= shift_slots[6] %></td>
+      <td><%= shift_slots[8] %></td>
     </tr>
     <tr>
       <td>Afternoon</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td><%= shift_slots[1] %></td>
+      <td><%= shift_slots[3] %></td>
+      <td><%= shift_slots[5] %></td>
+      <td><%= shift_slots[7] %></td>
+      <td><%= shift_slots[9] %></td>
     </tr>
   </tbody>
 </table>
+
+<p>
+  <b>Double Timers:</b> <%= @shift.on_point(week).join(", ") %>
+</p>
+
+<hr/>
 <% end %>
 
 

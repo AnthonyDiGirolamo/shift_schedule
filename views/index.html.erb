@@ -2,36 +2,32 @@
 <p>End: <%= @end %></p>
 <p><%= (@end - @start).to_f %> days</p>
 
-<% for week in 0..@weeks %>
+<% for week in 0..(@weeks-1) %>
 <table class="table table-striped">
   <thead>
   <tr>
-    <th>
-      Week:<%= week %>
-    </th>
-    <% for day in Date::DAYNAMES[1,5] %>
-    <th>
-      <%= day %>
-    </th>
+    <th> Week:<%= week %> </th>
+    <% for day in [1,2,3,4,5] %>
+    <th> <%= (@start + (week*7).days + day.days).strftime("%A - %m/%d/%Y") %> </th>
     <% end %>
   </tr>
   </thead>
   <tbody>
     <tr>
       <td>Morning</td>
-      <td>Morning</td>
-      <td>Morning</td>
-      <td>Morning</td>
-      <td>Morning</td>
-      <td>Morning</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Afternoon</td>
-      <td>Afternoon</td>
-      <td>Afternoon</td>
-      <td>Afternoon</td>
-      <td>Afternoon</td>
-      <td>Afternoon</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
   </tbody>
 </table>

@@ -14,7 +14,12 @@ Preferred Time Slots:
 
 <hr/>
 
-<% for week in 0..(@weeks-1) %>
+<% counts = {} %>
+<% @people.each do |person| %>
+<% counts[person] = 0 %>
+<% end %>
+
+<% for week in 0..(@weeks+3) %>
 <%# for week in 0..7 %>
 
 <table class="table table-striped">
@@ -27,6 +32,9 @@ Preferred Time Slots:
   </tr>
   </thead>
   <% shift_slots = @shift.schedule(week) %>
+  <% shift_slots.each do |person| %>
+  <% counts[person] += 1 %>
+  <% end %>
   <tbody>
     <tr>
       <td>Morning</td>
@@ -53,5 +61,6 @@ Preferred Time Slots:
 
 <hr/>
 <% end %>
+<%= counts %>
 
 

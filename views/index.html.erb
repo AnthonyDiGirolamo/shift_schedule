@@ -2,6 +2,17 @@
 <p>End: <%= @end %></p>
 <p><%= (@end - @start).to_f %> days</p>
 
+<p>People: <%= @people %></p>
+<p>
+Prefered Time Slots:
+<% @prefered_slots.each do |person, slot| %>
+<ul>
+  <li><%= person %>: <%= @slots[slot] %></li>
+</ul>
+<% end %>
+</p>
+
+
 <% for week in 0..(@weeks-1) %>
 <table class="table table-striped">
   <thead>

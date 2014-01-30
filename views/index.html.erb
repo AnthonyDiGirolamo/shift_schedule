@@ -1,4 +1,40 @@
 <p>Start: <%= @start %></p>
 <p>End: <%= @end %></p>
 <p><%= (@end - @start).to_f %> days</p>
-<p><%= ((@end - @start) / 7.0).to_f %> weeks</p>
+
+<% for week in 0..@weeks %>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>
+      Week:<%= week %>
+    </th>
+    <% for day in Date::DAYNAMES[1,5] %>
+    <th>
+      <%= day %>
+    </th>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Morning</td>
+      <td>Morning</td>
+      <td>Morning</td>
+      <td>Morning</td>
+      <td>Morning</td>
+      <td>Morning</td>
+    </tr>
+    <tr>
+      <td>Afternoon</td>
+      <td>Afternoon</td>
+      <td>Afternoon</td>
+      <td>Afternoon</td>
+      <td>Afternoon</td>
+      <td>Afternoon</td>
+    </tr>
+  </tbody>
+</table>
+<% end %>
+
+

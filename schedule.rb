@@ -40,8 +40,11 @@ post '/' do
   @weeks = params.fetch("weeks", 56).to_i
   @end = @start + (@weeks * 7).days
 
-  @people = params["person"]["name"].values.reject{|i| i.blank?}
-  @preferred_slots = @people.zip( params["person"]["shift"].values[0,@people.size].collect{|i|i.to_i} )
+  @people = params["slot"]["name"].values.reject{|i| i.blank?}
+  logger.info @people
+  @preferred_slots = params["slot"]["name"].collect{|slot_id, name| [name, slot_id.to_i] unless name.blank? }.compact
+  logger.info @preferred_slots
+  @people_slots = params["slot"]["name"].values
 
   calculate_shifts
 
@@ -54,7 +57,10 @@ get '/' do
   @end = Date.new(@year+1,1,1).end_of_week
   @weeks = ((@end - @start) / 7.0).to_i
   @people = %W[mitch bill chris simpson tony suzanne robert].collect{|n| n.titleize}
+  logger.info @people
   @preferred_slots = @people.zip([5, 3, 7, 6, 1, 4, 2])
+  logger.info @preferred_slots
+  @people_slots = ["", "mitch", "bill", "chris", "simpson", "tony", "suzanne", "robert", "", ""]
 
   calculate_shifts
 

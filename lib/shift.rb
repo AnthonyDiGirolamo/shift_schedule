@@ -6,9 +6,9 @@ class Shift
 
    def initialize(year: Time.new.year, people: [], slots: [], preferred_slots: [])
       @year = year
-      @people = people
-      @slots = slots
-      @preferred_slots = preferred_slots
+      @people = people.dup
+      @slots = slots.dup
+      @preferred_slots = preferred_slots.dup
    end
 
    def uncovered_shifts

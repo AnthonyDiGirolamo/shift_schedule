@@ -2,6 +2,7 @@
 <!-- <p>End: <%= @end %></p> -->
 <!-- <p><%= (@end - @start).to_f %> days</p> -->
 
+<!--
 <p>People: <%= @people %></p>
 <p>
 Preferred Time Slots:
@@ -15,6 +16,10 @@ Preferred Time Slots:
 Slots:
 <%= @slots %>
 </p>
+-->
+
+<div class="row">
+<div class="col-md-12">
 
 <h2>People</h2>
 <hr/>
@@ -63,21 +68,38 @@ Slots:
   </div>
 </form>
 
+</div>
+</div>
+
 <% if @shifts.present? %>
+
+<div class="row">
+<div class="col-md-12">
 
 <h2>Weekly Schedule</h2>
 <hr/>
 
-<%= @shift_counts %>
+<dl class="dl-horizontal">
+  <dt>Start</dt>
+  <dd><%= @start %></dd>
+  <dt>End</dt>
+  <dd><%= @end %></dd>
+  <dt>Shift Totals</dt>
+  <dd> <%= @shift_counts %> </dd>
+</dl>
+
+</div>
+</div>
+
 <% for week in 0..(@weeks-1) %>
 
+<div class="row">
+<div class="col-md-12">
+
 <p>
-  <!-- <b>Double Timers:</b> <%#= @shift.on_point(week).join(", ") %> -->
-  <!-- <div class="btn-group"> -->
-  <!--   <button type="button" class="btn btn-default disabled"> -->
-  <!--   Double Timers -->
-  <!--   </button> -->
-  <!-- </div> -->
+  <div class="btn-group">
+    <b>Double Timers&nbsp;</b>
+  </div>
   <div class="btn-group">
     <% @people.each do |person| %>
     <button type="button" class="btn <%= @shift.on_point(week).include?(person) ? "btn-info" : "btn-default" %>">
@@ -87,7 +109,7 @@ Slots:
   </div>
 </p>
 
-<table class="table table-bordered table-hover">
+<table class="table table-condensed table-hover">
   <thead>
   <tr>
     <th> Week:<%= week %> </th>
@@ -115,6 +137,9 @@ Slots:
     </tr>
   </tbody>
 </table>
+
+</div>
+</div>
 
 <% end %>
 <% end %>

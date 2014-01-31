@@ -53,7 +53,7 @@ get '/' do
   @start = Date.new(@year,1,1).end_of_week
   @end = Date.new(@year+1,1,1).end_of_week
   @weeks = ((@end - @start) / 7.0).to_i
-  @people = %W[mitch bill chris robert tony suzanne simpson].collect{|n| n.titleize}
+  @people = %W[mitch bill chris simpson tony suzanne robert].collect{|n| n.titleize}
   @preferred_slots = @people.zip([5, 3, 7, 6, 1, 4, 2])
 
   calculate_shifts

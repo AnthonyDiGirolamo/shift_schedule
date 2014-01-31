@@ -11,6 +11,14 @@ class Shift
       @preferred_slots = preferred_slots.dup
    end
 
+   def rotating_shifts
+     slot_numbers = []
+     for i in 0..slots.size-1
+       slot_numbers << i
+     end
+     slot_numbers - @preferred_slots.collect{|p,i| i}
+   end
+
    def uncovered_shifts
       slots.size - people.size
    end

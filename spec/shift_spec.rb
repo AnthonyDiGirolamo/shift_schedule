@@ -31,3 +31,14 @@ describe '.schedule' do
 
    end
 end
+
+describe '.rotating_shifts' do
+  it 'returns shifts that are rotated amongst people' do
+      people = %W[mitch bill chris robert tony suzanne simpson]
+      slots = %W[monday_morning monday_afternoon tuesday_morning tuesday_afternoon wednesday_morning wednesday_afternoon thursday_morning thursday_afternoon friday_morning friday_afternoon]
+      preferred_slots = people.zip([5, 3, 7, 6, 1, 4, 2])
+      s = Shift.new people: people, slots: slots, preferred_slots: preferred_slots
+
+      s.rotating_shifts.should == [0, 8, 9]
+  end
+end

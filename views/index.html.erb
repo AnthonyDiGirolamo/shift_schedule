@@ -70,7 +70,7 @@
   <%= @shift.rotating_shifts.collect{|i| @slots[i]}.join(", ") %>
   </dd>
   <dt>Shift Totals</dt>
-  <dd> <%= @shift_counts %> </dd>
+  <dd> <%= @shift_counts.collect{|person, count| "<b>#{person}:</b> #{count}"}.join(" &nbsp; ") %> </dd>
 </dl>
 
 </div>

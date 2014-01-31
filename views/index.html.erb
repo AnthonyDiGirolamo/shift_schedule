@@ -2,7 +2,6 @@
 <!-- <p>End: <%= @end %></p> -->
 <!-- <p><%= (@end - @start).to_f %> days</p> -->
 
-<!--
 <p>People: <%= @people %></p>
 <p>
 Preferred Time Slots:
@@ -12,7 +11,10 @@ Preferred Time Slots:
 </ul>
 <% end %>
 </p>
--->
+<p>
+Slots:
+<%= @slots %>
+</p>
 
 <h2>People</h2>
 <hr/>
@@ -61,16 +63,13 @@ Preferred Time Slots:
   </div>
 </form>
 
-<% counts = {} %>
-<% @people.each do |person| %>
-<% counts[person] = 0 %>
-<% end %>
+<% if @shifts.present? %>
 
 <h2>Weekly Schedule</h2>
 <hr/>
 
+<%= @shift_counts %>
 <% for week in 0..(@weeks-1) %>
-<%# for week in 0..27 %>
 
 <p>
   <!-- <b>Double Timers:</b> <%#= @shift.on_point(week).join(", ") %> -->
@@ -92,37 +91,31 @@ Preferred Time Slots:
   <thead>
   <tr>
     <th> Week:<%= week %> </th>
-    <% for day in [1,2,3,4,5] %>
-    <th> <%= (@start + (week*7).days + day.days).strftime("%A - %m/%d/%Y") %> </th>
+    <% for day in @shifts[week][:dates] %>
+    <th> <%= day %> </th>
     <% end %>
   </tr>
   </thead>
-  <% shift_slots = @shift.schedule(week) %>
-  <% shift_slots.each do |person| %>
-  <% counts[person] += 1 %>
-  <% end %>
   <tbody>
     <tr>
       <td>Morning</td>
-      <td><%= shift_slots[0] %></td>
-      <td><%= shift_slots[2] %></td>
-      <td><%= shift_slots[4] %></td>
-      <td><%= shift_slots[6] %></td>
-      <td><%= shift_slots[8] %></td>
+      <td><%= @shifts[week][:schedule][0] %></td>
+      <td><%= @shifts[week][:schedule][2] %></td>
+      <td><%= @shifts[week][:schedule][4] %></td>
+      <td><%= @shifts[week][:schedule][6] %></td>
+      <td><%= @shifts[week][:schedule][8] %></td>
     </tr>
     <tr>
       <td>Afternoon</td>
-      <td><%= shift_slots[1] %></td>
-      <td><%= shift_slots[3] %></td>
-      <td><%= shift_slots[5] %></td>
-      <td><%= shift_slots[7] %></td>
-      <td><%= shift_slots[9] %></td>
+      <td><%= @shifts[week][:schedule][1] %></td>
+      <td><%= @shifts[week][:schedule][3] %></td>
+      <td><%= @shifts[week][:schedule][5] %></td>
+      <td><%= @shifts[week][:schedule][7] %></td>
+      <td><%= @shifts[week][:schedule][9] %></td>
     </tr>
   </tbody>
 </table>
 
 <% end %>
-
-<%= counts %>
-
+<% end %>
 

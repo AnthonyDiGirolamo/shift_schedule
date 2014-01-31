@@ -31,7 +31,7 @@ def calculate_shifts
 end
 
 post '/' do
-  logger.info params
+  # logger.info params
 
   @year = params.fetch("year", Time.new.year).to_i
   @start = Date.new(@year,1,1).end_of_week

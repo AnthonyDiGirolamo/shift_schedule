@@ -2,6 +2,7 @@
 <p>End: <%= @end %></p>
 <p><%= (@end - @start).to_f %> days</p>
 
+<!--
 <p>People: <%= @people %></p>
 <p>
 Preferred Time Slots:
@@ -11,18 +12,45 @@ Preferred Time Slots:
 </ul>
 <% end %>
 </p>
+-->
 
+<h2>People</h2>
 <hr/>
+<form class="form-inline" role="form" action="/" id="people_form" method="post">
+  <% for person_id in 0..9 %>
+  <div class="form-group">
+
+    <!-- <label for="person_name_<%= person_id %>">Person <%= person_id %></label> -->
+    <input type="text" class="form-control" name="person[name[<%= person_id %>]]" id="person_name_<%= person_id %>" placeholder="<%= @people.try(:[], person_id) %>" value="<%= @people.try(:[], person_id) %>">
+
+    <!-- <label for="person_shift_<%= person_id %>">Preferred Shift <%= person_id %></label> -->
+    <select name="person[shift[<%= person_id %>]]" id="person_shift_<%= person_id %>">
+      <% @slots.each_with_index do |slot, index| %>
+      <option value="<%= index %>" <%= 'selected="selected"' if @preferred_slots.try(:[], person_id).try(:[], 1) == index %>><%= slot %></option>
+      <% end %>
+    </select>
+
+  </div>
+  <% end %>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
 
 <% counts = {} %>
 <% @people.each do |person| %>
 <% counts[person] = 0 %>
 <% end %>
 
+<h2>Weekly Schedule</h2>
+<hr/>
+
 <% for week in 0..(@weeks+3) %>
 <%# for week in 0..7 %>
 
-<table class="table table-striped">
+<p>
+  <b>Double Timers:</b> <%= @shift.on_point(week).join(", ") %>
+</p>
+
+<table class="table table-bordered table-hover">
   <thead>
   <tr>
     <th> Week:<%= week %> </th>
@@ -55,12 +83,8 @@ Preferred Time Slots:
   </tbody>
 </table>
 
-<p>
-  <b>Double Timers:</b> <%= @shift.on_point(week).join(", ") %>
-</p>
-
-<hr/>
 <% end %>
+
 <%= counts %>
 
 

@@ -1,6 +1,6 @@
-<p>Start: <%= @start %></p>
-<p>End: <%= @end %></p>
-<p><%= (@end - @start).to_f %> days</p>
+<!-- <p>Start: <%= @start %></p> -->
+<!-- <p>End: <%= @end %></p> -->
+<!-- <p><%= (@end - @start).to_f %> days</p> -->
 
 <!--
 <p>People: <%= @people %></p>
@@ -16,6 +16,7 @@ Preferred Time Slots:
 
 <h2>People</h2>
 <hr/>
+
 <form class="form-inline" role="form" action="/" id="people_form" method="post">
   <% for person_id in 0..9 %>
   <div class="form-group">
@@ -25,9 +26,11 @@ Preferred Time Slots:
 
     <!-- <label for="person_shift_<%= person_id %>">Preferred Shift <%= person_id %></label> -->
     <select name="person[shift[<%= person_id %>]]" id="person_shift_<%= person_id %>">
+
       <% @slots.each_with_index do |slot, index| %>
       <option value="<%= index %>" <%= 'selected="selected"' if @preferred_slots.try(:[], person_id).try(:[], 1) == index %>><%= slot %></option>
       <% end %>
+
     </select>
 
   </div>
@@ -44,10 +47,22 @@ Preferred Time Slots:
 <hr/>
 
 <% for week in 0..(@weeks+3) %>
-<%# for week in 0..7 %>
+<%# for week in 0..27 %>
 
 <p>
-  <b>Double Timers:</b> <%= @shift.on_point(week).join(", ") %>
+  <!-- <b>Double Timers:</b> <%#= @shift.on_point(week).join(", ") %> -->
+  <!-- <div class="btn-group"> -->
+  <!--   <button type="button" class="btn btn-default disabled"> -->
+  <!--   Double Timers -->
+  <!--   </button> -->
+  <!-- </div> -->
+  <div class="btn-group">
+    <% @people.each do |person| %>
+    <button type="button" class="btn <%= @shift.on_point(week).include?(person) ? "btn-info" : "btn-default" %>">
+    <%= person %>
+    </button>
+    <% end %>
+  </div>
 </p>
 
 <table class="table table-bordered table-hover">

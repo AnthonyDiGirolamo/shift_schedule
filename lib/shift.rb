@@ -4,11 +4,11 @@ require 'prettyprint'
 class Shift
    attr_accessor :year, :people, :slots, :preferred_slots
 
-   def initialize(year: Time.new.year, people: [], slots: [], preferred_slots: [])
-      @year = year
-      @people = people.dup
-      @slots = slots.dup
-      @preferred_slots = preferred_slots.dup
+   def initialize(args = {})
+      @year = args.fetch(:year, Time.new.year)
+      @people = args.fetch(:people, []).dup
+      @slots = args.fetch(:slots, []).dup
+      @preferred_slots = args.fetch(:preferred_slots, []).dup
    end
 
    def rotating_shifts

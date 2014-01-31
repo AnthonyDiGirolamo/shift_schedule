@@ -17,25 +17,48 @@ Preferred Time Slots:
 <h2>People</h2>
 <hr/>
 
-<form class="form-inline" role="form" action="/" id="people_form" method="post">
+<form class="form-horizontal" role="form" action="/" id="people_form" method="post">
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="year">Year</label>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" name="year" id="year" value="<%= @year %>">
+    </div>
+    <p class="help-block">Begining the first week in this year</p>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="weeks">Weeks</label>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" name="weeks" id="weeks" value="<%= @weeks %>">
+    </div>
+    <p class="help-block">Shifts even out every 28 weeks for 7 people</p>
+  </div>
+
   <% for person_id in 0..9 %>
   <div class="form-group">
 
-    <!-- <label for="person_name_<%= person_id %>">Person <%= person_id %></label> -->
+    <label class="col-sm-2 control-label" for="person_name_<%= person_id %>">Person <%= person_id %></label>
+    <div class="col-sm-2">
     <input type="text" class="form-control" name="person[name[<%= person_id %>]]" id="person_name_<%= person_id %>" placeholder="<%= @people.try(:[], person_id) %>" value="<%= @people.try(:[], person_id) %>">
 
-    <!-- <label for="person_shift_<%= person_id %>">Preferred Shift <%= person_id %></label> -->
-    <select name="person[shift[<%= person_id %>]]" id="person_shift_<%= person_id %>">
+    <label class="sr-only" for="person_shift_<%= person_id %>">Preferred Shift <%= person_id %></label>
+    </div>
+    <div class="col-sm-3">
+    <select class="form-control" name="person[shift[<%= person_id %>]]" id="person_shift_<%= person_id %>">
 
       <% @slots.each_with_index do |slot, index| %>
       <option value="<%= index %>" <%= 'selected="selected"' if @preferred_slots.try(:[], person_id).try(:[], 1) == index %>><%= slot %></option>
       <% end %>
 
     </select>
+    </div>
 
   </div>
   <% end %>
-  <button type="submit" class="btn btn-default">Submit</button>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">Refresh</button>
+    </div>
+  </div>
 </form>
 
 <% counts = {} %>
@@ -46,7 +69,7 @@ Preferred Time Slots:
 <h2>Weekly Schedule</h2>
 <hr/>
 
-<% for week in 0..(@weeks+3) %>
+<% for week in 0..(@weeks-1) %>
 <%# for week in 0..27 %>
 
 <p>

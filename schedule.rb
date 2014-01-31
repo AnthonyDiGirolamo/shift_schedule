@@ -6,11 +6,10 @@ require_relative 'lib/shift'
 post '/' do
   logger.info params
 
-  year = 2014
-  @start = Date.new(year,1,1).end_of_week
-  @end = Date.new(year+1,1,1).end_of_week
-  @weeks = ((@end - @start) / 7.0).to_i
-
+  @year = params["year"].to_i
+  @start = Date.new(@year,1,1).end_of_week
+  @weeks = params["weeks"].to_i
+  @end = @start + (@weeks * 7).days
   @slots = %W[monday_morning monday_afternoon tuesday_morning tuesday_afternoon wednesday_morning wednesday_afternoon thursday_morning thursday_afternoon friday_morning friday_afternoon]
 
   @people = params["person"]["name"].values.reject{|i| i.blank?}
@@ -22,9 +21,9 @@ post '/' do
 end
 
 get '/' do
-  year = 2014
-  @start = Date.new(year,1,1).end_of_week
-  @end = Date.new(year+1,1,1).end_of_week
+  @year = Time.new.year
+  @start = Date.new(@year,1,1).end_of_week
+  @end = Date.new(@year+1,1,1).end_of_week
   @weeks = ((@end - @start) / 7.0).to_i
   @people = %W[mitch bill chris robert tony suzanne simpson]
   @slots = %W[monday_morning monday_afternoon tuesday_morning tuesday_afternoon wednesday_morning wednesday_afternoon thursday_morning thursday_afternoon friday_morning friday_afternoon]

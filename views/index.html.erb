@@ -1,22 +1,3 @@
-<!-- <p>Start: <%= @start %></p> -->
-<!-- <p>End: <%= @end %></p> -->
-<!-- <p><%= (@end - @start).to_f %> days</p> -->
-
-<!--
-<p>People: <%= @people %></p>
-<p>
-Preferred Time Slots:
-<% @preferred_slots.each do |person, slot| %>
-<ul>
-  <li><%= person %>: <%= @slots[slot] %></li>
-</ul>
-<% end %>
-</p>
-<p>
-Slots:
-<%= @slots %>
-</p>
--->
 
 <div class="row">
 <div class="col-md-12">
@@ -86,7 +67,7 @@ Slots:
   <dd><%= @end %></dd>
   <dt>Rotating Shifts</dt>
   <dd>
-    <%= @shift.rotating_shifts %>
+  <%= @shift.rotating_shifts.collect{|i| @slots[i]}.join(", ") %>
   </dd>
   <dt>Shift Totals</dt>
   <dd> <%= @shift_counts %> </dd>

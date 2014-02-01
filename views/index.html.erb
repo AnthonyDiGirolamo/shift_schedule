@@ -74,9 +74,19 @@
   <dd><%= @start %></dd>
   <dt>End</dt>
   <dd><%= @end %></dd>
-  <dt>Rotating Shifts</dt>
+  <!-- <dt>Rotating Shifts</dt> -->
+  <!-- <dd> -->
+    <!-- <%#= @shift.rotating_shifts.collect{|i| @slots[i]}.join(", ") %> -->
+  <!-- </dd> -->
+  <dt>Rotating Shift Totals</dt>
   <dd>
-  <%= @shift.rotating_shifts.collect{|i| @slots[i]}.join(", ") %>
+  <% @rotating_shift_counts.each do |slot_id, totals| %>
+  <span class="label label-default col-xs-2">
+    <%= @slots[slot_id] %>
+  </span>
+  <%= totals.collect{|person, count| %{<span class="label label-default col-xs-1">#{person} #{count}</span>} }.join(" &nbsp; ") %>
+  <br/>
+  <% end %>
   </dd>
   <dt>Shift Totals</dt>
   <dd> <%= @shift_counts.collect{|person, count| "<b>#{person}:</b> #{count}"}.join(" &nbsp; ") %> </dd>

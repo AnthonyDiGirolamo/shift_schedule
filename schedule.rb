@@ -10,8 +10,20 @@ end
 def calculate_shifts
   @shift_counts = {}
   @shift_counts["empty"] = 0
+
+  @rotating_shift_counts = {}
+  @shift = Shift.new people: @people, slots: @slots, preferred_slots: @preferred_slots
+
+  @shift.rotating_shifts.each do |slot|
+    @rotating_shift_counts[slot] = {}
+  end
+
   @people.each do |person|
     @shift_counts[person] = 0
+
+    @rotating_shift_counts.keys.each do |slot|
+      @rotating_shift_counts[slot][person] = 0
+    end
   end
 
   @shifts = []
@@ -26,6 +38,10 @@ def calculate_shifts
 
     @shifts[week][:schedule].each do |person|
       @shift_counts[person] += 1
+    end
+
+    @rotating_shift_counts.keys.each do |slot|
+      @rotating_shift_counts[slot][ @shifts[week][:schedule][slot] ] += 1
     end
   end
 end
